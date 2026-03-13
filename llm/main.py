@@ -16,12 +16,17 @@ os.environ["LANGSMITH_API_KEY"] = ""
 room_id = {"living room": 1, "kitchen": 2, "bedroom": 3, "bathroom": 4, "balcony": 5, "entrance": 6, "dining room": 7, "study room": 8,
             "storage": 10 , "front door": 15, "interior_door": 17}
 
-from langchain.chat_models import init_chat_model
-from langchain.prompts import PromptTemplate
+#from langchain.chat_models import init_chat_model
+#from langchain.prompts import PromptTemplate
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import PromptTemplate
 from typing import List
 from langchain.tools import BaseTool
-from langchain.agents import AgentType, initialize_agent
-from langchain.chat_models import ChatOpenAI
+#from langchain.agents import AgentType, initialize_agent
+#from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
+
+
 system_message = """
 You are an intelligent floor plan designer who strictly follows naming conventions and room relationship rules.
 
@@ -64,7 +69,9 @@ In the following communication, guide the user through these steps while strictl
 api_key = ""
 base_url = ""
 
-model = init_chat_model("gpt-4o", api_key=api_key, base_url=base_url)
+#model = init_chat_model("gpt-4o", api_key=api_key, base_url=base_url)
+model = ChatOpenAI(model="gpt-4o", api_key=api_key, base_url=base_url) # type: ignore
+
 
 # 1. Custom room state management tool
 class RoomStateManager():
@@ -974,5 +981,5 @@ demo = gr.ChatInterface(
     description="This is a floor plan designer. You can use it to design your floor plan. You can also use it to ask questions about the floor plan.",
 )
 
-
+#demo.launch(share=True)
 demo.launch()
