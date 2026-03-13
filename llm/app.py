@@ -1,6 +1,7 @@
 import gradio as gr
 import os
-from langchain.chat_models import init_chat_model
+#from langchain.chat_models import init_chat_model
+from langchain_openai import ChatOpenAI
 from models.room_state import RoomStateManager
 from models.room_relationship import RoomRelationshipManager
 from models.room_graph import RoomGraphVisualizer
@@ -16,7 +17,8 @@ api_key = ""
 base_url = ""
 
 # Initialize the chat model
-model = init_chat_model("gpt-4o", api_key=api_key, base_url=base_url)
+# model = init_chat_model("gpt-4o", api_key=api_key, base_url=base_url)
+model = ChatOpenAI(model="gpt-4o", api_key=api_key, base_url=base_url) # type: ignore
 
 # Initialize managers
 room_tool = RoomStateManager()
@@ -99,4 +101,5 @@ demo = gr.ChatInterface(
 )
 
 if __name__ == "__main__":
+    #demo.launch(share=True)
     demo.launch() 
