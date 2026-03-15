@@ -35,6 +35,22 @@ house_diffusion
 
 ## Running the code
 
+### Quick start helper script
+
+You can use the helper script to set up a local virtual environment and run common workflows:
+
+```bash
+bash scripts/setup_and_run.sh install
+bash scripts/setup_and_run.sh train
+```
+
+The script also supports `sample` and `designer` modes:
+
+```bash
+bash scripts/setup_and_run.sh sample
+bash scripts/setup_and_run.sh designer
+```
+
 **1. Training**
 
 You can run a single experiment using the following command:
