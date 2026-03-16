@@ -1,5 +1,11 @@
 import gradio as gr
 import os
+import json
+from datetime import datetime
+from pathlib import Path
+from itertools import count
+from threading import Lock
+
 #from langchain.chat_models import init_chat_model
 from langchain_openai import ChatOpenAI
 from models.room_state import RoomStateManager
@@ -11,6 +17,27 @@ from models.room_relationship_llm import RoomRelationshipLLM
 from managers.memory import CustomSummaryMemory
 from managers.phase_transition import PhaseTransitionLLM
 from utils.constants import system_message, room_id
+
+LOG_PATH = Path(__file__).resolve().parent / "chat_logs.jsonl"
+CHAT_ID_COUNTER = count(1)
+CHAT_ID_LOCK = Lock()
+
+def _next_chat_id():
+    with CHAT_ID_LOCK:
+        return next(CHAT_ID_COUNTER)
+
+
+def _log_chat_entry(role, content, phase_name):
+    entry = {
+        "timestamp": datetime.utcnow().isoformat(timespec="seconds") + "Z",
+        "role": role,
+        "content": content,
+        "phase": phase_name,
+    }
+    with LOG_PATH.open("a", encoding="utf-8") as log_file:
+        log_file.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
 
 # Initialize API key and base URL
 api_key = ""
@@ -43,6 +70,7 @@ def process(message, history):
     # Add user message to memory
     message = message.get("text", "")
     memory.add_user_message(message)
+    _log_chat_entry("user", message, phase_tracker.get_phase_name())
     response = model.invoke(memory.buffer)
     memory.add_ai_message(response.content)
     
@@ -88,6 +116,8 @@ def process(message, history):
     
     if current_phase == 2 and visualization is not None:
         result.append(gr.Image(visualization))
+
+    _log_chat_entry("assistant", response.content, phase_tracker.get_phase_name())
     
     return result
 
