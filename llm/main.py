@@ -516,27 +516,25 @@ IMPORTANT RULES:
    - The AI suggests specific room connections with clear door specifications
 
 4. For suggested connections:
-   - If the AI suggests connections with clear room names and door specifications, treat them as valid connections
-   - Each suggested connection must specify:
-     a) The exact names of the two rooms being connected
-     b) Whether there is a door between them (true/false)
+   - If the AI or user suggests a connection with clear room names, treat it as valid even if the door state is omitted
+   - Each connection must specify the exact names of the two rooms being connected
+   - If the door state is not explicitly provided, default has_door to true
    - Example valid suggestions:
      * "bedroom_1 connects to bathroom_1 with a door" -> VALID
-     * "living room connects to entrance with a door" -> VALID
-     * "kitchen connects to dining room without a door" -> VALID
+     * "living room connects to entrance" -> VALID (assume has_door=true)
+     * "kitchen connects to dining room" -> VALID (assume has_door=true)
    - Example invalid suggestions:
-     * "bedroom connects to bathroom" -> INVALID (missing door specification)
-     * "living room is accessible from entrance" -> INVALID (vague connection)
-
+     * "bedroom connects to bathroom" -> INVALID (when multiple bedrooms/bathrooms exist and the mapping is ambiguous)
+     * "living room is accessible from entrance" -> INVALID (if the exact rooms cannot be resolved)
 5. When processing AI suggestions:
    - Extract each connection statement from the AI's response
    - Convert each connection into a valid operation
    - If a connection is mentioned multiple times, use the most recent specification
-   - If a connection is unclear or missing door specification, skip it
-   - If a connection uses non-standard room names, standardize them first
+   - If a connection is omits the door specification, set has_door to true
+   - If a connection is unclear, ambiguous, or uses non-standard room names, standardize it first or skip it if it cannot be resolved safely
 
 When you detect changes in room relationships, you should:
-- Add new relationships when they are explicitly mentioned or clearly suggested
+- Add new relationships when they are explicitly mentioned or clearly suggested or reasonably inferred from the confirmed room list
 - Update door connections when they are explicitly changed
 - Remove relationships when they are explicitly removed
 
@@ -828,6 +826,8 @@ IMPORTANT RULES:
 2. For Phase 2 (Room Relationships):
    - Transition if all rooms have been connected and the user explicitly confirms
    - Transition if the AI explicitly indicates moving to the next phase
+   - Transition if the user requests layout generation and the confirmed rooms are 
+     sufficient to infer a sensible default connected layout
    - Look for explicit confirmation of relationships
    - Look for AI transition phrases like:
      * "Now, we'll move on to the Room Layout Diagram Generation Phase"
