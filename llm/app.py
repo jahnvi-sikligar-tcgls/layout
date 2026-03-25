@@ -19,6 +19,7 @@ from managers.phase_transition import PhaseTransitionLLM
 from utils.constants import system_message, room_id
 
 LOG_PATH = Path(__file__).resolve().parent / "chat_logs.jsonl"
+PHASE2_RELATIONSHIPS_PATH = Path(__file__).resolve().parent / "phase2_relationships.json"
 CHAT_ID_COUNTER = count(1)
 CHAT_ID_LOCK = Lock()
 
@@ -36,6 +37,19 @@ def _log_chat_entry(role, content, phase_name):
     }
     with LOG_PATH.open("a", encoding="utf-8") as log_file:
         log_file.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+
+def _save_phase2_relationships(relationship_manager):
+    relationships = relationship_manager.query_relationships()
+    payload = {
+        "relationships": [
+            {"room1": room1, "room2": room2, "has_door": has_door}
+            for (room1, room2), has_door in relationships.items()
+        ]
+    }
+    with PHASE2_RELATIONSHIPS_PATH.open("w", encoding="utf-8") as relationship_file:
+        json.dump(payload, relationship_file, ensure_ascii=False, indent=2)
+
 
 os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
 
@@ -99,7 +113,10 @@ def process(message, history):
     elif current_phase == 2:
         # Phase 2: Update room relationships
         relationship_results, visualization = relationship_llm.process_conversation(f"User: {message}\nAI: {response.content}")
-    
+        _save_phase2_relationships(relationship_tool)
+        print(f"Updated relationships: {relationship_tool.query_relationships()}")
+        print(f"Relationship LLM results: {relationship_results}")
+        
     elif current_phase == 3:
         # Phase 3: Generate layout info
         layout_info = relationship_tool.get_room_layout_info(room_tool)
