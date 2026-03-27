@@ -1,0 +1,49 @@
+{
+  "relationships": [
+    {
+      "room1": "entrance_1",
+      "room2": "living room_1",
+      "has_door": true
+    },
+    {
+      "room1": "balcony_1",
+      "room2": "living room_1",
+      "has_door": true
+    },
+    {
+      "room1": "kitchen_1",
+      "room2": "living room_1",
+      "has_door": true
+    },
+    {
+      "room1": "kitchen_1",
+      "room2": "storage_1",
+      "has_door": true
+    },
+    {
+      "room1": "bedroom_1",
+      "room2": "living room_1",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom_1",
+      "room2": "bedroom_1",
+      "has_door": true
+    },
+    {
+      "room1": "bedroom_2",
+      "room2": "living room_1",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom_2",
+      "room2": "living room_1",
+      "has_door": true
+    },
+    {
+      "room1": "dining room_1",
+      "room2": "kitchen_1",
+      "has_door": true
+    }
+  ]
+}
