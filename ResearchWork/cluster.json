@@ -1,0 +1,209 @@
+{
+  "relationships": [
+    
+    // ----------- CORE (COMMON AREA) -----------//
+    {
+      "room1": "lobby",
+      "room2": "lift_1",
+      "has_door": true
+    },
+    {
+      "room1": "lobby",
+      "room2": "lift_2",
+      "has_door": true
+    },
+
+    // ----------- 2BHK UNIT -----------
+    {
+      "room1": "entrance_2bhk",
+      "room2": "lobby",
+      "has_door": true
+    },
+    {
+      "room1": "entrance_2bhk",
+      "room2": "living_room_2bhk",
+      "has_door": true
+    },
+    {
+      "room1": "living_room_2bhk",
+      "room2": "balcony_2bhk",
+      "has_door": true
+    },
+    {
+      "room1": "living_room_2bhk",
+      "room2": "kitchen_2bhk",
+      "has_door": true
+    },
+    {
+      "room1": "kitchen_2bhk",
+      "room2": "storage_2bhk",
+      "has_door": true
+    },
+    {
+      "room1": "kitchen_2bhk",
+      "room2": "dining_room_2bhk",
+      "has_door": true
+    },
+    {
+      "room1": "bedroom1_2bhk",
+      "room2": "living_room_2bhk",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom1_2bhk",
+      "room2": "bedroom1_2bhk",
+      "has_door": true
+    },
+    {
+      "room1": "bedroom2_2bhk",
+      "room2": "living_room_2bhk",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom2_2bhk",
+      "room2": "bedroom2_2bhk",
+      "has_door": true
+    },
+
+    // ----------- 3BHK UNIT -----------
+    {
+      "room1": "entrance_3bhk",
+      "room2": "lobby",
+      "has_door": true
+    },
+    {
+      "room1": "entrance_3bhk",
+      "room2": "living_room_3bhk",
+      "has_door": true
+    },
+    {
+      "room1": "living_room_3bhk",
+      "room2": "balcony_3bhk",
+      "has_door": true
+    },
+    {
+      "room1": "living_room_3bhk",
+      "room2": "kitchen_3bhk",
+      "has_door": true
+    },
+    {
+      "room1": "kitchen_3bhk",
+      "room2": "storage_3bhk",
+      "has_door": true
+    },
+    {
+      "room1": "kitchen_3bhk",
+      "room2": "dining_room_3bhk",
+      "has_door": true
+    },
+
+    {
+      "room1": "bedroom1_3bhk",
+      "room2": "living_room_3bhk",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom1_3bhk",
+      "room2": "bedroom1_3bhk",
+      "has_door": true
+    },
+
+    {
+      "room1": "bedroom2_3bhk",
+      "room2": "living_room_3bhk",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom2_3bhk",
+      "room2": "bedroom2_3bhk",
+      "has_door": true
+    },
+
+    {
+      "room1": "bedroom3_3bhk",
+      "room2": "living_room_3bhk",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom3_3bhk",
+      "room2": "bedroom3_3bhk",
+      "has_door": true
+    },
+
+    // ----------- 4BHK UNIT -----------
+    {
+      "room1": "entrance_4bhk",
+      "room2": "lobby",
+      "has_door": true
+    },
+    {
+      "room1": "entrance_4bhk",
+      "room2": "living_room_4bhk",
+      "has_door": true
+    },
+    {
+      "room1": "living_room_4bhk",
+      "room2": "balcony_4bhk",
+      "has_door": true
+    },
+    {
+      "room1": "living_room_4bhk",
+      "room2": "kitchen_4bhk",
+      "has_door": true
+    },
+    {
+      "room1": "kitchen_4bhk",
+      "room2": "storage_4bhk",
+      "has_door": true
+    },
+    {
+      "room1": "kitchen_4bhk",
+      "room2": "dining_room_4bhk",
+      "has_door": true
+    },
+
+    {
+      "room1": "bedroom1_4bhk",
+      "room2": "living_room_4bhk",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom1_4bhk",
+      "room2": "bedroom1_4bhk",
+      "has_door": true
+    },
+
+    {
+      "room1": "bedroom2_4bhk",
+      "room2": "living_room_4bhk",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom2_4bhk",
+      "room2": "bedroom2_4bhk",
+      "has_door": true
+    },
+
+    {
+      "room1": "bedroom3_4bhk",
+      "room2": "living_room_4bhk",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom3_4bhk",
+      "room2": "bedroom3_4bhk",
+      "has_door": true
+    },
+
+    {
+      "room1": "bedroom4_4bhk",
+      "room2": "living_room_4bhk",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom4_4bhk",
+      "room2": "bedroom4_4bhk",
+      "has_door": true
+    }
+  ]
+}
