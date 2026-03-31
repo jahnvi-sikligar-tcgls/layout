@@ -1,0 +1,163 @@
+{
+  "relationships": [
+    
+// ----------- CORE -----------
+    {
+      "room1": "lobby",
+      "room2": "lift_1",
+      "has_door": true
+    },
+    {
+      "room1": "lobby",
+      "room2": "lift_2",
+      "has_door": true
+    },
+    {
+      "room1": "lobby",
+      "room2": "staircase",
+      "has_door": true
+    },
+
+// ----------- UNIT 1 - 1BHK(TOP-LEFT) -----------
+
+    { 
+      "room1": "entrance_u1",
+      "room2": "lobby",
+      "has_door": true
+    },
+    {
+      "room1": "entrance_u1",
+      "room2": "living_room_u1",
+      "has_door": true
+    },
+    {
+      "room1": "living_room_u1",
+      "room2": "kitchen_u1",
+      "has_door": true
+    },
+    {
+      "room1": "bedroom_1_u1",
+      "room2": "living_room_u1",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom_1_u1",
+      "room2": "bedroom_1_u1",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom_2_u1",
+      "room2": "living_room_u1",
+      "has_door": true
+    },
+
+// ----------- UNIT 2 - 2BHK(TOP-RIGHT) -----------
+
+    {
+      "room1": "entrance_u2",
+      "room2": "lobby",
+      "has_door": true
+    },
+    {
+      "room1": "entrance_u2",
+      "room2": "living_room_u2",
+      "has_door": true
+    },
+    {
+      "room1": "living_room_u2",
+      "room2": "kitchen_u2",
+      "has_door": true
+    },
+    {
+      "room1": "bedroom_1_u2",
+      "room2": "living_room_u2",
+      "has_door": true
+    },
+    {
+      "room1": "bedroom_2_u2",
+      "room2": "living_room_u2",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom_1_u2",
+      "room2": "bedroom_1_u2",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom_2_u2",
+      "room2": "living_room_u2",
+      "has_door": true
+    },
+
+// ----------- UNIT 3 - 2BHK(BOTTOM-LEFT) -----------
+
+   {
+      "room1": "entrance_u3",
+      "room2": "lobby",
+      "has_door": true
+    },
+    {
+      "room1": "entrance_u3",
+      "room2": "living_room_u3",
+      "has_door": true
+    },
+    {
+      "room1": "living_room_u3",
+      "room2": "kitchen_u3",
+      "has_door": true
+    },
+    {
+      "room1": "bedroom_1_u3",
+      "room2": "living_room_u3",
+      "has_door": true
+    },
+    {
+      "room1": "bedroom_2_u3",
+      "room2": "living_room_u3",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom_1_u3",
+      "room2": "bedroom_1_u3",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom_2_u3",
+      "room2": "living_room_u3",
+      "has_door": true
+    },
+
+// ----------- UNIT 4 - 1BHK(BOTTOM-RIGHT) -----------
+
+    { 
+      "room1": "entrance_u4",
+      "room2": "lobby",
+      "has_door": true
+    },
+    {
+      "room1": "entrance_u4",
+      "room2": "living_room_u4",
+      "has_door": true
+    },
+    {
+      "room1": "living_room_u4",
+      "room2": "kitchen_u4",
+      "has_door": true
+    },
+    {
+      "room1": "bedroom_1_u4",
+      "room2": "living_room_u4",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom_1_u4",
+      "room2": "bedroom_1_u4",
+      "has_door": true
+    },
+    {
+      "room1": "bathroom_2_u4",
+      "room2": "living_room_u4",
+      "has_door": true
+    }
+  ]
+}
