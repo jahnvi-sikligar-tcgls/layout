@@ -1,4 +1,5 @@
 # Create and save the floorplan image based on provided JSON
+# This is an obsolete code for floorplan image generation
 
 import matplotlib.pyplot as plt
 
