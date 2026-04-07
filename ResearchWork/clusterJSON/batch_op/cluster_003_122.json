@@ -1,0 +1,143 @@
+{
+  "units": [
+    {
+      "unit_id": "u1",
+      "type": "1BHK",
+      "direction": "top-left",
+      "relationships": [
+        {
+          "room1": "entrance_u1",
+          "room2": "living_room_u1",
+          "has_door": true
+        },
+        {
+          "room1": "living_room_u1",
+          "room2": "kitchen_u1",
+          "has_door": true
+        },
+        {
+          "room1": "bedroom_1_u1",
+          "room2": "living_room_u1",
+          "has_door": true
+        },
+        {
+          "room1": "bathroom_1_u1",
+          "room2": "bedroom_1_u1",
+          "has_door": true
+        }
+      ]
+    },
+    {
+      "unit_id": "u2",
+      "type": "2BHK",
+      "direction": "middle-left",
+      "relationships": [
+        {
+          "room1": "entrance_u2",
+          "room2": "living_room_u2",
+          "has_door": true
+        },
+        {
+          "room1": "living_room_u2",
+          "room2": "kitchen_u2",
+          "has_door": true
+        },
+        {
+          "room1": "bedroom_1_u2",
+          "room2": "living_room_u2",
+          "has_door": true
+        },
+        {
+          "room1": "bathroom_1_u2",
+          "room2": "bedroom_1_u2",
+          "has_door": true
+        },
+        {
+          "room1": "bedroom_2_u2",
+          "room2": "living_room_u2",
+          "has_door": true
+        },
+        {
+          "room1": "bathroom_2_u2",
+          "room2": "bedroom_2_u2",
+          "has_door": true
+        }
+      ]
+    },
+    {
+      "unit_id": "u3",
+      "type": "2BHK",
+      "direction": "top-right",
+      "relationships": [
+        {
+          "room1": "entrance_u3",
+          "room2": "living_room_u3",
+          "has_door": true
+        },
+        {
+          "room1": "living_room_u3",
+          "room2": "kitchen_u3",
+          "has_door": true
+        },
+        {
+          "room1": "bedroom_1_u3",
+          "room2": "living_room_u3",
+          "has_door": true
+        },
+        {
+          "room1": "bathroom_1_u3",
+          "room2": "bedroom_1_u3",
+          "has_door": true
+        },
+        {
+          "room1": "bedroom_2_u3",
+          "room2": "living_room_u3",
+          "has_door": true
+        },
+        {
+          "room1": "bathroom_2_u3",
+          "room2": "bedroom_2_u3",
+          "has_door": true
+        }
+      ]
+    }
+  ],
+  "common_areas": [
+    "corridor",
+    "lobby",
+    "staircase",
+    "lift_1"
+  ],
+  "inter_unit_relationships": [
+    {
+      "room1": "entrance_u1",
+      "room2": "corridor",
+      "has_door": true
+    },
+    {
+      "room1": "entrance_u2",
+      "room2": "corridor",
+      "has_door": true
+    },
+    {
+      "room1": "entrance_u3",
+      "room2": "corridor",
+      "has_door": true
+    },
+    {
+      "room1": "corridor",
+      "room2": "lobby",
+      "has_door": true
+    },
+    {
+      "room1": "lobby",
+      "room2": "staircase",
+      "has_door": true
+    },
+    {
+      "room1": "lobby",
+      "room2": "lift_1",
+      "has_door": true
+    }
+  ]
+}
