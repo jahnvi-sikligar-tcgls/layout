@@ -1,0 +1,52 @@
+Instructions for JSON-to-Floorplan Generation
+
+1. Data Integrity & Global Constraints
+
+Single Instance Rule: Every unit_id defined in the JSON (e.g., u1, u2, u3) must be depicted 
+exactly once in the final floorplate. Do not duplicate units for symmetry.
+
+Strict Room Counts: Each unit must contain only the specific rooms listed in its relationships 
+or type field. If a unit is labeled "1BHK" (like Unit 1), it must have exactly one bedroom; 
+if "2BHK", exactly two.
+
+No Hallucinations: Do not add furniture, 3D perspectives, or extra rooms (like additional bathrooms 
+or study rooms) that are not explicitly defined in the JSON.
+
+2. Spatial Logic & Orientation
+
+Directional Mapping: Use the direction attribute for each unit (e.g., "top-left", "middle-left", 
+"top-right") to determine its physical placement relative to the central corridor.
+
+Contiguous Grouping: Group all rooms sharing the same numerical suffix (e.g., _u1, _u2) 
+into a single, enclosed residential unit.
+
+3. Circulation & Connectivity
+
+Central Hub Architecture: The corridor is the primary circulation path. All unit entrance rooms must 
+share a physical boundary (wall) with this corridor.
+
+Common Area Integration: The corridor must connect to the lobby. The lobby must contain the staircase 
+and lift_1 as defined in the inter_unit_relationships.
+
+Doorway Placement: For every relationship where has_door is true, an architectural door swing symbol 
+must be drawn on the shared wall between those two specific rooms.
+
+4. Visual Drafting Standards
+
+Style: Professional 2D orthographic projection (top-down view). 
+       Use a black-and-white technical blueprint aesthetic.
+
+Labeling: Every room and unit must be labeled with its exact 
+          string name from the JSON (e.g., living_room_u1, kitchen_u3). 
+          Use a clean, legible sans-serif font.
+
+Lines: Use high-contrast, thin architectural line weights for walls and standard arcs for door swings.
+
+5. Technical Execution (For Code-Based Generation)
+
+Coordinate Accuracy: If generating via SVG or Python, calculate coordinates 
+                     based on unit sizes and their relative "direction" to 
+                     ensure no overlapping of units.
+
+Verification: Prior to rendering, verify that the room count in the image matches 
+              the room count in the JSON relationships array for each unit.
