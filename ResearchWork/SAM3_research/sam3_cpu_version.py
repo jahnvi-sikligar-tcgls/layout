@@ -8,7 +8,7 @@ import base64
 import json # Import the json module
 
 
-API_KEY = "ROBOfLOW_API_KEY"
+API_KEY = "ROBOFLOW_API_KEY"
 image_path = "/content/page23_img76.png"
 
 image_bgr = cv2.imread(image_path)
@@ -102,3 +102,4 @@ else:
     plt.show()
 
     cv2.imwrite("segmented_output.png", cv2.cvtColor(annotated, cv2.COLOR_RGB2BGR))
+
