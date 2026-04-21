@@ -2,7 +2,6 @@ import os
 import json
 from openai import OpenAI
 
-
 client = OpenAI(api_key="", base_url="")
 
 def prompt_chat(prompt):
@@ -53,7 +52,6 @@ def describe_floor_plan(room_types, connections):
     
     room_names_str = ", ".join(room_names)
 
-    
     connections_str = ""
     # Print connections
     for connection in connections:
@@ -72,7 +70,6 @@ for file_name in file_names:
     with open(f'datasets/rplan/{file_name}', 'r') as f:
         data = json.load(f)
         
-
     room_type = data['room_types']
 
     room_end = room_type.index(17)
@@ -91,6 +88,4 @@ for file_name in file_names:
 
     with open(f'datasets/rplan_txt/{file_name}', 'w') as f:
         json.dump(data, f)
-
-
-
+        
