@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { margin: 0; background: transparent; font-family: var(--font-sans, sans-serif); }
+canvas { display: block; width: 100%; }
+</style>
+</head>
+<body>
+<canvas id="fp"></canvas>
+<script>
+const SCALE = 52;
+const PAD = 32;
+
+const rooms = [
+  {name:"living room",  x:5, y:4, w:5, h:4, color:"#E6F1FB", stroke:"#185FA5"},
+  {name:"entrance",     x:5, y:8, w:3, h:2, color:"#EAF3DE", stroke:"#3B6D11"},
+  {name:"balcony",      x:8, y:8, w:3, h:2, color:"#E1F5EE", stroke:"#0F6E56"},
+  {name:"kitchen",      x:1, y:4, w:4, h:3, color:"#FAEEDA", stroke:"#854F0B"},
+  {name:"dining room",  x:1, y:7, w:4, h:2, color:"#FAECE7", stroke:"#993C1D"},
+  {name:"storage",      x:1, y:2, w:3, h:2, color:"#F1EFE8", stroke:"#5F5E5A"},
+  {name:"bedroom 1",    x:10,y:4, w:4, h:4, color:"#EEEDFE", stroke:"#534AB7"},
+  {name:"bathroom 1",   x:14,y:4, w:2, h:3, color:"#FBEAF0", stroke:"#993556"},
+  {name:"bedroom 2",    x:10,y:0, w:4, h:4, color:"#EEEDFE", stroke:"#534AB7"},
+  {name:"bathroom 2",   x:5, y:0, w:3, h:3, color:"#FBEAF0", stroke:"#993556"},
+];
+
+const doorConnections = [
+  ["entrance","living room"],
+  ["balcony","living room"],
+  ["kitchen","living room"],
+  ["kitchen","storage"],
+  ["bedroom 1","living room"],
+  ["bathroom 1","bedroom 1"],
+  ["bedroom 2","living room"],
+  ["bathroom 2","living room"],
+  ["dining room","kitchen"],
+];
+
+// Find grid bounds
+const maxX = Math.max(...rooms.map(r => r.x + r.w));
+const maxY = Math.max(...rooms.map(r => r.y + r.h));
+
+const W = maxX * SCALE + PAD * 2;
+const H = maxY * SCALE + PAD * 2;
+
+const canvas = document.getElementById('fp');
+canvas.width = W;
+canvas.height = H;
+
+const ctx = canvas.getContext('2d');
+
+// Dark mode detection
+const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const bgColor = dark ? '#1a1a18' : '#f7f6f2';
+const wallColor = dark ? '#888780' : '#444441';
+const textColor = dark ? '#c2c0b6' : '#2C2C2A';
+const subColor = dark ? '#888780' : '#5F5E5A';
+
+ctx.fillStyle = bgColor;
+ctx.fillRect(0, 0, W, H);
+
+function rx(x) { return PAD + x * SCALE; }
+function ry(y) { return PAD + y * SCALE; }
+
+// Helper: get shared wall segment between two rooms
+function getSharedWall(a, b) {
+  // Check vertical shared wall
+  // a's right = b's left
+  if (a.x + a.w === b.x) {
+    const top = Math.max(a.y, b.y);
+    const bot = Math.min(a.y + a.h, b.y + b.h);
+    if (bot > top) return {type:'v', x: a.x + a.w, y1: top, y2: bot};
+  }
+  if (b.x + b.w === a.x) {
+    const top = Math.max(a.y, b.y);
+    const bot = Math.min(a.y + a.h, b.y + b.h);
+    if (bot > top) return {type:'v', x: a.x, y1: top, y2: bot};
+  }
+  // Check horizontal shared wall
+  if (a.y + a.h === b.y) {
+    const left = Math.max(a.x, b.x);
+    const right = Math.min(a.x + a.w, b.x + b.w);
+    if (right > left) return {type:'h', y: a.y + a.h, x1: left, x2: right};
+  }
+  if (b.y + b.h === a.y) {
+    const left = Math.max(a.x, b.x);
+    const right = Math.min(a.x + a.w, b.x + b.w);
+    if (right > left) return {type:'h', y: a.y, x1: left, x2: right};
+  }
+  return null;
+}
+
+function getRoomByName(name) {
+  return rooms.find(r => r.name === name);
+}
+
+// Collect door positions
+const doorPositions = [];
+doorConnections.forEach(([n1, n2]) => {
+  const a = getRoomByName(n1);
+  const b = getRoomByName(n2);
+  if (!a || !b) return;
+  const wall = getSharedWall(a, b);
+  if (!wall) return;
+  
+  let dx, dy, cx, cy;
+  const doorW = 0.6; // in grid units
+  if (wall.type === 'v') {
+    const mid = (wall.y1 + wall.y2) / 2;
+    cx = rx(wall.x);
+    cy = ry(mid);
+    dx = 0; dy = doorW * SCALE / 2;
+  } else {
+    const mid = (wall.x1 + wall.x2) / 2;
+    cx = rx(mid);
+    cy = ry(wall.y);
+    dx = doorW * SCALE / 2; dy = 0;
+  }
+  doorPositions.push({wall, cx, cy, dx, dy});
+});
+
+// Draw rooms
+rooms.forEach(room => {
+  const x = rx(room.x), y = ry(room.y);
+  const w = room.w * SCALE, h = room.h * SCALE;
+  
+  // Fill
+  ctx.fillStyle = dark ? room.stroke + '22' : room.color;
+  ctx.fillRect(x, y, w, h);
+  
+  // Wall border
+  ctx.strokeStyle = dark ? room.stroke + 'aa' : room.stroke;
+  ctx.lineWidth = 2;
+  ctx.strokeRect(x + 1, y + 1, w - 2, h - 2);
+});
+
+// Draw door openings (white gaps on walls)
+doorPositions.forEach(({wall, cx, cy, dx, dy}) => {
+  ctx.strokeStyle = bgColor;
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(cx - dx, cy - dy);
+  ctx.lineTo(cx + dx, cy + dy);
+  ctx.stroke();
+  
+  // Door arc indicator
+  ctx.strokeStyle = wallColor;
+  ctx.lineWidth = 1;
+  ctx.setLineDash([2, 2]);
+  
+  const arcR = 0.5 * SCALE;
+  if (wall.type === 'v') {
+    ctx.beginPath();
+    ctx.arc(cx, cy - dy, arcR * 0.6, -Math.PI/2, 0);
+    ctx.stroke();
+  } else {
+    ctx.beginPath();
+    ctx.arc(cx - dx, cy, arcR * 0.6, 0, Math.PI/2);
+    ctx.stroke();
+  }
+  ctx.setLineDash([]);
+});
+
+// Draw room labels
+rooms.forEach(room => {
+  const x = rx(room.x), y = ry(room.y);
+  const w = room.w * SCALE, h = room.h * SCALE;
+  const cx = x + w / 2;
+  const cy = y + h / 2;
+
+  // Name
+  ctx.fillStyle = textColor;
+  ctx.font = `500 12px var(--font-sans, sans-serif)`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  
+  const lines = room.name.split(' ');
+  if (lines.length === 1 || w < 80) {
+    ctx.fillText(room.name, cx, cy);
+  } else {
+    ctx.fillText(lines[0], cx, cy - 8);
+    ctx.fillText(lines.slice(1).join(' '), cx, cy + 8);
+  }
+  
+  // Dimensions label
+  ctx.fillStyle = subColor;
+  ctx.font = `11px var(--font-sans, sans-serif)`;
+  ctx.fillText(`${room.w}×${room.h}`, cx, cy + (lines.length > 1 ? 22 : 14));
+});
+
+// Outer border
+ctx.strokeStyle = wallColor;
+ctx.lineWidth = 3;
+ctx.strokeRect(PAD, PAD, maxX * SCALE, maxY * SCALE);
+
+// Legend
+const lx = PAD;
+const ly = H - 20;
+ctx.fillStyle = subColor;
+ctx.font = `11px var(--font-sans, sans-serif)`;
+ctx.textAlign = 'left';
+ctx.textBaseline = 'middle';
+ctx.fillText('⌒ = door opening', lx, ly);
+</script>
+</body>
+</html>
